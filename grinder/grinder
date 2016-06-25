@@ -22,6 +22,8 @@ print("Remote Pillar repository:  " + str(conf['environment']['statesrepo']))
 # Read repository master branches
 statebranches = lsremote(conf['environment']['statesrepo'])
 pillarbranches = lsremote(conf['environment']['pillarrepo'])
+print("Branches of Salt States:  " + str(statebranches))
+print("Branches of Pillar:  " + str(pillarbranches))
 
 # Change directory to the environments directory
 # cd conf['environment']['environmentdir']
