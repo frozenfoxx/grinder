@@ -34,13 +34,19 @@ print("Branches of Salt States:  ")
 for key in statebranches:
   if key != "HEAD":
     print(key.split('/')[-1])
-    os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/states", 0o755)
+    try:
+      os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/states", 0o755)
+    except:
+      pass
 
 print("Branches of Pillar:  ")
 for key in pillarbranches:
   if key != "HEAD":
     print(key.split('/')[-1])
-    os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/pillar", 0o755)
+    try:
+      os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/pillar", 0o755)
+    except:
+      pass
 
 # Change into the branchdir
 # cd <branch>
