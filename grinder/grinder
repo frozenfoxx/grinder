@@ -26,22 +26,21 @@ print("Remote Pillar repository:  " + str(conf['environment']['statesrepo']))
 statebranches = lsremote(conf['environment']['statesrepo'])
 pillarbranches = lsremote(conf['environment']['pillarrepo'])
 
+# Change directory to the environments directory
+os.chdir(conf['environment']['environmentdir'])
+
+# Make directory structure for the branch
 print("Branches of Salt States:  ")
 for key in statebranches:
   if key != "HEAD":
     print(key.split('/')[-1])
+    os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/states", 0o755)
 
 print("Branches of Pillar:  ")
 for key in pillarbranches:
   if key != "HEAD":
     print(key.split('/')[-1])
-
-# Change directory to the environments directory
-os.chdir(conf['environment']['environmentdir'])
-
-# Make directory structure for the branch
-#os.makedirs(conf['environment']['environmentdir'] + branchname + states, 0755)
-#os.makedirs(conf['environment']['environmentdir'] + branchname + pillar, 0755)
+    os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/pillar", 0o755)
 
 # Change into the branchdir
 # cd <branch>
