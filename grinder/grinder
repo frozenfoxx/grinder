@@ -2,6 +2,7 @@
 import configparser
 import git
 import os
+import urllib.request
 
 origdir = os.getcwd()
 
@@ -26,9 +27,6 @@ print("Remote Pillar repository:  " + str(conf['environment']['statesrepo']))
 statebranches = lsremote(conf['environment']['statesrepo'])
 pillarbranches = lsremote(conf['environment']['pillarrepo'])
 
-# Change directory to the environments directory
-os.chdir(conf['environment']['environmentdir'])
-
 # Make directory structure for the branch
 print("Branches of Salt States:  ")
 for key in statebranches:
@@ -36,6 +34,18 @@ for key in statebranches:
     print(key.split('/')[-1])
     try:
       os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/states", 0o755)
+
+      # Change into the branchdir
+      os.chdir(conf['environment']['environmentdir'] + "/" + key.split('/')[-1])
+
+      # Grab zipfile of the branch
+      # urllib.request.urlretrieve("https://github.com/<user>/<repo>/archive/<branch>.zip", file_name)
+
+      # Expand in states
+      # cd states ; unzip <branch>.zip
+
+      # Cleanup
+      # cd branchdir ; rm <branch>.zip
     except:
       pass
 
@@ -45,18 +55,17 @@ for key in pillarbranches:
     print(key.split('/')[-1])
     try:
       os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/pillar", 0o755)
+
+      # Change into the branchdir
+      os.chdir(conf['environment']['environmentdir'] + "/" + key.split('/')[-1])
+
+      # Grab zipfile of the branch
+      # urllib.request.urlretrieve("https://github.com/<user>/<repo>/archive/<branch>.zip", file_name)
+
+      # Expand in states
+      # cd states ; unzip <branch>.zip
+
+      # Cleanup
+      # cd branchdir ; rm <branch>.zip
     except:
       pass
-
-# Change into the branchdir
-# cd <branch>
-# branchdir = pwd
-
-# Grab zipfile of the branch
-# https://github.com/<user>/<repo>/archive/<branch>.zip
-
-# Expand in states
-# cd states ; unzip <branch>.zip
-
-# Cleanup
-# cd branchdir ; rm <branch>.zip
