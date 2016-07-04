@@ -31,15 +31,16 @@ pillarbranches = lsremote(conf['environment']['pillarrepo'])
 print("Branches of Salt States:  ")
 for key in statebranches:
   if key != "HEAD":
-    print(key.split('/')[-1])
+    branch = key.split('/')[-1]
+    print(branch)
     try:
-      os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/states", 0o755)
+      os.makedirs(conf['environment']['environmentdir'] + "/" + branch + "/states", 0o755)
 
       # Change into the branchdir
-      os.chdir(conf['environment']['environmentdir'] + "/" + key.split('/')[-1])
+      os.chdir(conf['environment']['environmentdir'] + "/" + branch)
 
       # Grab zipfile of the branch
-      # urllib.request.urlretrieve("https://github.com/<user>/<repo>/archive/<branch>.zip", file_name)
+      # urllib.request.urlretrieve(str(conf['environment']['statesrepo']) + "/archive/" + branch + ".zip", branch + ".zip")
 
       # Expand in states
       # cd states ; unzip <branch>.zip
@@ -52,15 +53,16 @@ for key in statebranches:
 print("Branches of Pillar:  ")
 for key in pillarbranches:
   if key != "HEAD":
-    print(key.split('/')[-1])
+    branch = key.split('/')[-1]
+    print(branch)
     try:
-      os.makedirs(conf['environment']['environmentdir'] + "/" + key.split('/')[-1] + "/pillar", 0o755)
+      os.makedirs(conf['environment']['environmentdir'] + "/" + branch + "/pillar", 0o755)
 
       # Change into the branchdir
-      os.chdir(conf['environment']['environmentdir'] + "/" + key.split('/')[-1])
+      os.chdir(conf['environment']['environmentdir'] + "/" + branch)
 
       # Grab zipfile of the branch
-      # urllib.request.urlretrieve("https://github.com/<user>/<repo>/archive/<branch>.zip", file_name)
+      # urllib.request.urlretrieve(str(conf['environment']['pillarrepo']) + "/archive/" + branch + ".zip", branch + ".zip")
 
       # Expand in states
       # cd states ; unzip <branch>.zip
