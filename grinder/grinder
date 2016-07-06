@@ -2,7 +2,6 @@
 import configparser
 import git
 import os
-import urllib.request
 
 origdir = os.getcwd()
 
@@ -11,17 +10,29 @@ conf = configparser.ConfigParser()
 conf.read("conf/grinder.conf")
 
 def lsremote(url):
-    remote_refs = {}
-    g = git.cmd.Git()
-    for ref in g.ls_remote(url).split('\n'):
-        hash_ref_list = ref.split('\t')
-        remote_refs[hash_ref_list[1]] = hash_ref_list[0]
-    return remote_refs
+  remote_refs = {}
+  g = git.cmd.Git()
+  for ref in g.ls_remote(url).split('\n'):
+    hash_ref_list = ref.split('\t')
+    remote_refs[hash_ref_list[1]] = hash_ref_list[0]
+  return remote_refs
+
+def clonestates(url, basedir, branch):
+  targetdir = basedir + "/" + branch + "/states"
+  arguments = "-b " + branch + "--depth 0"
+  g = git.cmd.Git()
+  g.clone_from(url, targetdir, progress=None, env=None, branch_path=branch, depth=0)
+
+def clonepillar(url, basedir, branch):
+  targetdir = basedir + "/" + branch + "/pillar"
+  arguments = "-b " + branch + "--depth 0"
+  g = git.cmd.Git()
+  g.clone_from(url, targetdir, progress=None, env=None, branch_path=branch, depth=0)
 
 print("Configuration loaded.")
 print("Base directory for environments:  " + str(conf['environment']['environmentdir']))
 print("Remote Salt States repository:  " + str(conf['environment']['statesrepo']))
-print("Remote Pillar repository:  " + str(conf['environment']['statesrepo']))
+print("Remote Pillar repository:  " + str(conf['environment']['pillarrepo']))
 
 # Read repository master branches
 statebranches = lsremote(conf['environment']['statesrepo'])
@@ -34,19 +45,11 @@ for key in statebranches:
     branch = key.split('/')[-1]
     print(branch)
     try:
-      os.makedirs(conf['environment']['environmentdir'] + "/" + branch + "/states", 0o755)
+      os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
 
-      # Change into the branchdir
-      os.chdir(conf['environment']['environmentdir'] + "/" + branch)
+      # Clone branch
+      clonestates(conf['environment']['statesrepo'], conf['environment']['environmentdir'], branch)
 
-      # Grab zipfile of the branch
-      # urllib.request.urlretrieve(str(conf['environment']['statesrepo']) + "/archive/" + branch + ".zip", branch + ".zip")
-
-      # Expand in states
-      # cd states ; unzip <branch>.zip
-
-      # Cleanup
-      # cd branchdir ; rm <branch>.zip
     except:
       pass
 
@@ -56,18 +59,10 @@ for key in pillarbranches:
     branch = key.split('/')[-1]
     print(branch)
     try:
-      os.makedirs(conf['environment']['environmentdir'] + "/" + branch + "/pillar", 0o755)
+      os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
 
-      # Change into the branchdir
-      os.chdir(conf['environment']['environmentdir'] + "/" + branch)
+      # Clone branch
+      clonepillar(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], branch)
 
-      # Grab zipfile of the branch
-      # urllib.request.urlretrieve(str(conf['environment']['pillarrepo']) + "/archive/" + branch + ".zip", branch + ".zip")
-
-      # Expand in states
-      # cd states ; unzip <branch>.zip
-
-      # Cleanup
-      # cd branchdir ; rm <branch>.zip
     except:
       pass
