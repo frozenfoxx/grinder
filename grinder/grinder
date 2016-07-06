@@ -21,13 +21,13 @@ def clonestates(url, basedir, branch):
   targetdir = basedir + "/" + branch + "/states"
   arguments = "-b " + branch + "--depth 0"
   g = git.cmd.Git()
-  g.clone_from(url, targetdir, progress=None, env=None, branch_path=branch, depth=0)
+  g.clone_from(url, targetdir, progress=None, env=None, branch=branch, depth=0)
 
 def clonepillar(url, basedir, branch):
   targetdir = basedir + "/" + branch + "/pillar"
   arguments = "-b " + branch + "--depth 0"
   g = git.cmd.Git()
-  g.clone_from(url, targetdir, progress=None, env=None, branch_path=branch, depth=0)
+  g.clone_from(url, targetdir, progress=None, env=None, branch=branch, depth=0)
 
 print("Configuration loaded.")
 print("Base directory for environments:  " + str(conf['environment']['environmentdir']))
