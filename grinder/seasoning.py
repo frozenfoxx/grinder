@@ -11,7 +11,9 @@ class Seasoning:
     self.config = ""
 
   def loadseasoning():
-    self.config = yaml.safe_load(self.fileref)
+    stream = open(self.fileref)
+    self.config = yaml.safe_load(stream)
+    stream.close()
   
   def cloneformula(name, url, branch):
     targetdir = self.statesdir + "/" + name
