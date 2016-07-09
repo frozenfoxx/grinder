@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 import configparser
 import git
+import seasoning
 import shutil
 import os
 
