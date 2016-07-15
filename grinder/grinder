@@ -52,6 +52,10 @@ for key in statebranches:
     # Clone branch
     clonestates(conf['environment']['statesrepo'], conf['environment']['environmentdir'], branch)
 
+    # Parse the Seasoning file
+    seasoning = Seasoning(conf['environment']['environmentdir'], branch)
+    seasoning.load()
+
 print("Branches of Pillar:  ")
 for key in pillarbranches:
   if key != "HEAD":
