@@ -6,8 +6,8 @@ import yaml
 
 class Seasoning:
   def __init__(self, basedir, branch):
-    self.fileref = basedir + "/" + branch + "/states/seasoning.yml"
     self.statesdir = basedir + "/" + branch + "/states"
+    self.fileref = self.statesdir + "/seasoning.yml"
     self.config = ""
 
   def loadseasoning(self):
@@ -19,3 +19,5 @@ class Seasoning:
     targetdir = self.statesdir + "/" + name
     g = git.cmd.Git()
     g.clone(url, targetdir, branch=branch, depth=1)
+    # mv the cloned target/reponame -> self.statesdir
+    # shutil.rmtree(reponame)
