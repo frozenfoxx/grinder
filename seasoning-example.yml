@@ -1,0 +1,9 @@
+---
+vim:
+  reponame: "vim-formula"
+  url:      "git@github.com:saltstack-formulas/vim-formula.git"
+  branch:   "master"
+fail2ban:
+  reponame: "fail2ban-formula"
+  url:      "git@github.com:saltstack-formulas/fail2ban-formula.git"
+  branch:   "master"
