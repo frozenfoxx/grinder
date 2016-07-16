@@ -53,8 +53,8 @@ for key in statebranches:
     clonestates(conf['environment']['statesrepo'], conf['environment']['environmentdir'], branch)
 
     # Parse the Seasoning file
-    seasoning = Seasoning(conf['environment']['environmentdir'], branch)
-    seasoning.load()
+    s = seasoning.Seasoning(conf['environment']['environmentdir'], branch)
+    s.deploy()
 
 print("Branches of Pillar:  ")
 for key in pillarbranches:

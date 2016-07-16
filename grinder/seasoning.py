@@ -10,6 +10,11 @@ class Seasoning:
     self.fileref = self.statesdir + "/seasoning.yml"
     self.config = ""
 
+  def deploy(self):
+    self.loadseasoning()
+    for key in self.config:
+      print("Found key " + key + " in the seasoning.yml")
+
   def loadseasoning(self):
     stream = open(self.fileref)
     self.config = yaml.safe_load(stream)
