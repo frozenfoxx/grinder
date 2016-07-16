@@ -26,7 +26,7 @@ There are several steps to be taken to prepare your repositories for dynamic dep
 ## Salt
 * Configure the Salt master configuration file to set `top_file_merging_strategy: same`.
 
-# How to Use
+# Usage
 * Run `grinder`.
 * Modify the Salt Master's `master` configuration to point the `file_roots` and `pillar_roots` sections at the newly created branches in the directory structure (*default:*  */srv/salt/environments/branchname*).
 * Restart Salt Master.
