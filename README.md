@@ -12,6 +12,7 @@ Grinder is a dynamic environment deployment tool for SaltStack inspired by the e
  * `virtualenv grinder`
  * `source ~/.virtualenv/grinder/bin/activate`
 * `pip install gitpython`
+* `pip install pyyaml`
 
 # Configuration
 ## Grinder
