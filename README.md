@@ -28,7 +28,17 @@ There are several steps to be taken to prepare your repositories for dynamic dep
 * Configure the Salt master configuration file to set `top_file_merging_strategy: same`.
 
 # Usage
-* Run `grinder`.
-* Modify the Salt Master's `master` configuration to point the `file_roots` and `pillar_roots` sections at the newly created branches in the directory structure (*default:*  */srv/salt/environments/branchname*).
-* Restart Salt Master.
-* To use an alternate dynamic environment on a Minion, use the option `saltenv=<branch>`.
+This workflow assumes that you have a `base` branch and wish to create, test, and then integrate a new feature into the codebase.  The normal workflow goes like this:
+* Have Pillar and States repos,
+* In each repo, check out a new branch called, `featurebranch`.
+* In each `top.sls`, either rename `base` to `featurebranch` or add a `featurebranch` section with targets.
+* Modify code in repos until satisfied with changes.
+* Push each repo to origin.
+* On salt *master*, run grinder.
+* Update `master.conf` to point at new `file_roots` and `pillar_roots` directories. [to be eventually handled by Grinder]
+* Kick *saltmaster* service. [to be eventually handled by Grinder]
+* Either from salt *master* or from *minion*, run `salt state.apply --saltenv=featurebranch`.
+* Iterate on code, pushing back to master and redeploying with Grinder until desired behavior is achieved.
+* In both repos remove the `featurebranch` section or rename back to `base`.
+* `git checkout base && git merge featurebranch`.
+* On salt *master* run grinder, update `master.conf` to remove references to `featurebranch`, kick salt *master*.
