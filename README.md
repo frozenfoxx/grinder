@@ -29,7 +29,7 @@ There are several steps to be taken to prepare your repositories for dynamic dep
 
 # Usage
 This workflow assumes that you have a `base` branch and wish to create, test, and then integrate a new feature into the codebase.  The normal workflow goes like this:
-* Have Pillar and States repos,
+* Have Pillar and States repos.
 * In each repo, check out a new branch called, `featurebranch`.
 * In each `top.sls`, either rename `base` to `featurebranch` or add a `featurebranch` section with targets.
 * Modify code in repos until satisfied with changes.
@@ -42,3 +42,6 @@ This workflow assumes that you have a `base` branch and wish to create, test, an
 * In both repos remove the `featurebranch` section or rename back to `base`.
 * `git checkout base && git merge featurebranch`.
 * On salt *master* run grinder, update `master.conf` to remove references to `featurebranch`, kick salt *master*.
+
+# Future
+At the moment Grinder does not automatically update the Salt `master.conf` file.  It also does not automatically kick the *saltmaster* service to reload and re-initialize values.  Eventually there should also be an option not to touch the Pillar data in any way as alternatives may be desired.  Finally Grinder should eventually handle more than just Git.
