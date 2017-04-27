@@ -7,9 +7,7 @@ Grinder is a dynamic environment deployment tool for SaltStack inspired by the e
 
 # Setup
 * It is recommended to use [VirtualEnv](https://virtualenv.pypa.io/en/stable/) to manage your Python environment.
- * `mkdir ~/.virtualenv`
- * `cd ~/.virtualenv`
- * `virtualenv grinder`
+ * `python3 -m venv ~/.virtualenv/grinder`
  * `source ~/.virtualenv/grinder/bin/activate`
 * `pip install gitpython`
 * `pip install pyyaml`
