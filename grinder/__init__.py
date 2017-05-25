@@ -14,9 +14,13 @@ print("Base directory for environments:  " + str(conf['environment']['environmen
 print("Remote Salt States repository:  " + str(conf['environment']['statesrepo']))
 print("Remote Pillar repository:  " + str(conf['environment']['pillarrepo']))
 
+# Set repositories
+statesrepo = repository.Repository(conf['environment']['statesrepo'], conf['environment']['environmentdir'], "states")
+pillarrepo = repository.Repository(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], "pillar")
+
 # Read repository master branches
-statebranches = lsremote(conf['environment']['statesrepo'])
-pillarbranches = lsremote(conf['environment']['pillarrepo'])
+statebranches = statesrepo.lsremote()
+pillarbranches = pillarrepo.lsremote()
 
 # Clean up old environment
 shutil.rmtree(conf['environment']['environmentdir'])
@@ -24,13 +28,13 @@ shutil.rmtree(conf['environment']['environmentdir'])
 # Make directory structure for the branch
 print("Branches of Salt States:  ")
 for key in statebranches:
-  if key != "HEAD":
-    branch = key.split('/')[-1]
-    print(branch)
-    os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
+    if key != "HEAD":
+        branch = key.split('/')[-1]
+        print(branch)
+        os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
 
     # Clone branch
-    clonestates(conf['environment']['statesrepo'], conf['environment']['environmentdir'], branch)
+    statesrepo.clone(branch)
 
     # Parse the Seasoning file
     s = seasoning.Seasoning(conf['environment']['environmentdir'], branch)
@@ -38,9 +42,9 @@ for key in statebranches:
 
 print("Branches of Pillar:  ")
 for key in pillarbranches:
-  if key != "HEAD":
-    branch = key.split('/')[-1]
-    print(branch)
+    if key != "HEAD":
+        branch = key.split('/')[-1]
+        print(branch)
 
-    # Clone branch
-    clonepillar(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], branch)
+        # Clone branch
+        pillarrepo.clone(branch)
