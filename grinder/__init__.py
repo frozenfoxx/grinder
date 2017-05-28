@@ -1,7 +1,7 @@
 import configparser
 import git
-import repository
-import seasoning
+import .repository
+import .seasoning
 import shutil
 import os
 import yaml
