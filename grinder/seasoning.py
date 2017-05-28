@@ -1,9 +1,3 @@
-#! /usr/bin/env python
-import git
-import shutil
-import os
-import yaml
-
 class Seasoning:
   def __init__(self, basedir, branch):
     self.statesdir = basedir + "/" + branch + "/states"

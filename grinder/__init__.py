@@ -4,6 +4,7 @@ import repository
 import seasoning
 import shutil
 import os
+import yaml
 
 # Source configuration
 conf = configparser.ConfigParser()
