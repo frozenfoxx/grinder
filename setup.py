@@ -1,4 +1,5 @@
 from distutils.core import setup
+
 setup(
     name = 'grinder',
     packages = ['grinder'],
@@ -10,4 +11,7 @@ setup(
     download_url = 'https://github.com/frozenfoxx/grinder/archive/0.1.tar.gz',
     keywords = ['salt', 'devops', 'deployment', 'pillar'],
     classifiers = [],
+    scripts = [
+        'scripts/grinder',
+    ],
 )
