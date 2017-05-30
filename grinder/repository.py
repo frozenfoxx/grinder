@@ -1,4 +1,8 @@
+import git
+
 class Repository:
+    """ grinder Repository class """
+
     def __init__(self, url, basedir, postfix):
         self.url = url
         self.basedir = basedir

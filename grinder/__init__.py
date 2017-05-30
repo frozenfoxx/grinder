@@ -1,10 +1,10 @@
+""" grinder module """
+
 import configparser
-import git
-import repository
-import seasoning
-import shutil
+from .repository import Repository
+from .seasoning import Seasoning
 import os
-import yaml
+import shutil
 
 # Source configuration
 conf = configparser.ConfigParser()
