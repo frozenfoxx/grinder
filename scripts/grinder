@@ -5,5 +5,4 @@ Deploy environments for Salt from configured environments
 
 import grinder
 
-if __name__ == '__main__':
-    main()
+grinder.main()
