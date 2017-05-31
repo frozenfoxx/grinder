@@ -13,6 +13,10 @@ setup(
     download_url='https://github.com/frozenfoxx/grinder/archive/0.1.tar.gz',
     keywords=['salt', 'devops', 'deployment', 'pillar'],
     classifiers=[],
+    install_requires=[
+        'gitpython',
+        'pyyaml'
+    ],
     scripts=[
         'scripts/grinder',
     ],
