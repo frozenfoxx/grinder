@@ -1,3 +1,4 @@
+import git
 import shutil
 import yaml
 
