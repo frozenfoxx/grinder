@@ -17,8 +17,8 @@ def main():
     print("Remote Pillar repository:  " + str(conf['environment']['pillarrepo']))
 
     # Set repositories
-    statesrepo = repository.Repository(conf['environment']['statesrepo'], conf['environment']['environmentdir'], "states")
-    pillarrepo = repository.Repository(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], "pillar")
+    statesrepo = Repository(conf['environment']['statesrepo'], conf['environment']['environmentdir'], "states")
+    pillarrepo = Repository(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], "pillar")
 
     # Read repository master branches
     statebranches = statesrepo.lsremote()
@@ -39,7 +39,7 @@ def main():
         statesrepo.clone(branch)
 
         # Parse the Seasoning file
-        s = seasoning.Seasoning(conf['environment']['environmentdir'], branch)
+        s = Seasoning(conf['environment']['environmentdir'], branch)
         s.deploy()
 
     print("Branches of Pillar:  ")
