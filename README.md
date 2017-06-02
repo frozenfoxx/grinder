@@ -3,15 +3,13 @@ Grinder is a dynamic environment deployment tool for SaltStack inspired by the e
 
 # Requirements
 * Python 3+
-* GitPython
-* PyYAML
+* Git
 
 # Setup
 * It is recommended to use [VirtualEnv](https://virtualenv.pypa.io/en/stable/) to manage your Python environment.
  * `python3 -m venv ~/.virtualenv/grinder`
  * `source ~/.virtualenv/grinder/bin/activate`
-* `pip install gitpython`
-* `pip install pyyaml`
+* `pip install grinder`
 
 # Configuration
 ## Grinder
@@ -33,14 +31,14 @@ This workflow assumes that you have a `base` branch and wish to create, test, an
 * In each `top.sls`, either use `{{ saltenv }}` at the top or add a `featurebranch` section with targets.
 * Modify code in repos until satisfied with changes.
 * Push each repo to origin.
-* On salt *master*, run grinder.
+* On salt *master*, run `grinder`.
 * Update `master.conf` to point at new `file_roots` and `pillar_roots` directories. [to be eventually handled by Grinder]
 * Kick *saltmaster* service. [to be eventually handled by Grinder]
-* Either from salt *master* or from *minion*, run `salt state.apply --saltenv=featurebranch`.
+* Either from salt *master* or from *minion*, run `salt state.apply --saltenv=featurebranch --pillarenv=featurebranch`.
 * Iterate on code, pushing back to master and redeploying with Grinder until desired behavior is achieved.
 * In both repos remove the `featurebranch` section or leave in `{{ saltenv }}`.
 * `git checkout base && git merge featurebranch`.
-* On salt *master* run grinder, update `master.conf` to remove references to `featurebranch`, kick salt *master*.
+* On salt *master* run `grinder`, update `master.conf` to remove references to `featurebranch`, kick salt *master*.
 
 # Future
 At the moment Grinder does not automatically update the Salt `master.conf` file.  It also does not automatically kick the *saltmaster* service to reload and re-initialize values.  Eventually there should also be an option not to touch the Pillar data in any way as alternatives may be desired.  Finally Grinder should eventually handle more than just Git.
