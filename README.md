@@ -4,6 +4,7 @@ Grinder is a dynamic environment deployment tool for SaltStack inspired by the e
 # Requirements
 * Python 3+
 * Git
+* OpenSSH
 
 # Setup
 * It is recommended to use [VirtualEnv](https://virtualenv.pypa.io/en/stable/) to manage your Python environment.
