@@ -1,13 +1,12 @@
 """ grinder core functionality """
 
 import configparser
-import os
-import shutil
 from .environment import Environment
 from .repository import Repository
 from .seasoning import Seasoning
 
 def main():
+    """ Main execution thread """
     # Source configuration
     conf = configparser.ConfigParser()
     conf.read("/etc/grinder/grinder.conf")
@@ -18,9 +17,9 @@ def main():
     print("Remote Pillar repository:  " + str(conf['environment']['pillarrepo']))
 
     # Set environment
+    environment = Environment(conf['environment']['environmentdir'])
     statesrepo = Repository(conf['environment']['statesrepo'], conf['environment']['environmentdir'], "states")
     pillarrepo = Repository(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], "pillar")
-    environment = Environment(conf['environment']['environmentdir'])
 
     # Read repository master branches
     statebranches = statesrepo.lsremote()
@@ -35,7 +34,7 @@ def main():
         if key != "HEAD":
             branch = key.split('/')[-1]
             print(branch)
-            os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
+            environment.createbranch(branch)
 
             # Clone branch
             statesrepo.clone(branch)

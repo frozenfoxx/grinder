@@ -9,6 +9,7 @@ class Repository:
         self.postfix = postfix
 
     def lsremote(self):
+        """ List branches in the repository """
         remote_refs = {}
         g = git.cmd.Git()
         for ref in g.ls_remote(self.url).split('\n'):
@@ -17,6 +18,7 @@ class Repository:
         return remote_refs
 
     def clone(self, branch):
+        """ Clone a repository branch """
         targetdir = self.basedir + "/" + branch + "/" + self.postfix
         g = git.cmd.Git()
         g.clone(self.url, targetdir, branch=branch, depth=1)

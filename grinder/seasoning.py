@@ -11,11 +11,13 @@ class Seasoning:
         self.config = ""
 
     def loadseasoning(self):
+        """ Parse the seasoning file """
         stream = open(self.fileref)
         self.config = yaml.safe_load(stream)
         stream.close()
 
     def deploy(self):
+        """ Deploy formulas in the seasoning file """
         self.loadseasoning()
         for key in self.config:
             print("Deploying " + key + " formula...")
@@ -23,6 +25,7 @@ class Seasoning:
             self.config[key]['url'], self.config[key]['branch'])
 
     def cloneformula(self, formulaname, reponame, url, branch):
+        """ Clone a given formula """
         repotargetdir = self.statesdir + "/" + reponame
         clonedformuladir = repotargetdir + "/" + formulaname
 
