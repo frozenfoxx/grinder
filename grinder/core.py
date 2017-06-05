@@ -3,6 +3,7 @@
 import configparser
 import os
 import shutil
+from .environment import Environment
 from .repository import Repository
 from .seasoning import Seasoning
 
@@ -16,16 +17,17 @@ def main():
     print("Remote Salt States repository:  " + str(conf['environment']['statesrepo']))
     print("Remote Pillar repository:  " + str(conf['environment']['pillarrepo']))
 
-    # Set repositories
+    # Set environment
     statesrepo = Repository(conf['environment']['statesrepo'], conf['environment']['environmentdir'], "states")
     pillarrepo = Repository(conf['environment']['pillarrepo'], conf['environment']['environmentdir'], "pillar")
+    environment = Environment(conf['environment']['environmentdir'])
 
     # Read repository master branches
     statebranches = statesrepo.lsremote()
     pillarbranches = pillarrepo.lsremote()
 
     # Clean up old environment
-    shutil.rmtree(conf['environment']['environmentdir'])
+    environment.clean()
 
     # Make directory structure for the branch
     print("Branches of Salt States:  ")
@@ -35,12 +37,12 @@ def main():
             print(branch)
             os.makedirs(conf['environment']['environmentdir'] + "/" + branch, 0o755)
 
-        # Clone branch
-        statesrepo.clone(branch)
+            # Clone branch
+            statesrepo.clone(branch)
 
-        # Parse the Seasoning file
-        s = Seasoning(conf['environment']['environmentdir'], branch)
-        s.deploy()
+            # Parse the Seasoning file
+            s = Seasoning(conf['environment']['environmentdir'], branch)
+            s.deploy()
 
     print("Branches of Pillar:  ")
     for key in pillarbranches:
